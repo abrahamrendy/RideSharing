@@ -11,6 +11,7 @@ from math import sin, cos, sqrt, atan2, radians
 # type = 0 is for Driver
 #
 ############# CONNECTION #############
+### Connect to the system
 class Login(APIView):
 	def post(self,request,format=None):
 		if (request.data['type'] == '1'):
@@ -32,12 +33,15 @@ class Login(APIView):
 				driver = None
 			if (driver is not None):
 				if (driver.password == request.data['password']):
+					driver.status = 'A'
+					driver.save()
 					return Response({'info': 'Success'})
 				else:
 					return Response({'info': 'Failed', 'message' : 'Failed to connect'})
 			else:
 				return Response({'info' : 'Failed','message': 'Failed to Connect, Incorrect Driver Username'})
 
+### Send current location (presence) of either Passenger or Driver
 class SendPresence(APIView):
 	def post(self, request, format=None):
 		if (request.data['type'] == '1'):
@@ -66,6 +70,7 @@ class SendPresence(APIView):
 				return Response({'info' : 'Failed' , 'message' : 'Send presence failed'})
 
 ############# PAIRING #############
+### Send ride request to the system by passenger
 class SendRequest(APIView):
 	def post(self, request, format=None):
 		if (request.data['type'] == '1'):
@@ -98,6 +103,7 @@ class SendRequest(APIView):
 		else:
 			return Response({'info' : 'Failed', 'message' : "You can't make a request"})
 
+### Receive all requests that haven't been accepted
 class ReceiveRequest(APIView):
 	def post(self, request, format=None):
 		if (request.data['type'] == '0'):
@@ -116,6 +122,7 @@ class ReceiveRequest(APIView):
 			else:
 				return Response ({'info' : 'Failed', 'message' : 'Driver not exist'})
 
+### Accept request
 class AcceptRequest (APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
@@ -133,6 +140,7 @@ class AcceptRequest (APIView):
 			else:
 				return Response ({'info' : 'Failed', 'message' : 'Driver not exist'})
 
+### Passengers receive their request that have been accepted by driver
 class ReceiveAcceptedRequest(APIView):
 	def post (self, request, format = None):
 		if (request.data['type'] == '1'):
@@ -151,6 +159,7 @@ class ReceiveAcceptedRequest(APIView):
 				return Response ({'info' : 'Failed', 'message' : 'User not exist'})
 
 ############# APPROACHING #############
+### Send the driver current location
 class SendDriverLocation(APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
@@ -168,6 +177,7 @@ class SendDriverLocation(APIView):
 		else:
 			return Response({'info' : 'Failed', 'message' : 'Sending location failed'})
 
+### Passenger receive the driver current location
 class ReceiveDriverLocation(APIView):
 	def post (self, request, format = None):
 		if (request.data['type'] == '1'):
@@ -188,6 +198,7 @@ class ReceiveDriverLocation(APIView):
 			return Response({'info' : 'Failed'})
 
 ############# DRIVING #############
+### Driver start the trip
 class StartTrip(APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
@@ -199,12 +210,15 @@ class StartTrip(APIView):
 				request = System.objects.get(request_id = request.data['request_id'])
 				request.trip_status = 'O'
 				request.save()
+				driver.status = 'I'
+				driver.save()
 				return Response({'info' : 'Success', 'message': 'Trip started'})
 			else:
 				return Response({'info' : 'Failed', 'message' : "Driver doesn't exist"})
 		else:
 			return Response({'info' : 'Failed'})
 
+### Driver end the trip
 class EndTrip(APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
