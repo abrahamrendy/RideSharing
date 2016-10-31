@@ -168,11 +168,11 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 /*Data for the table `django_migrations` */
 
-insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (1,'contenttypes','0001_initial','2016-10-28 08:43:16.312000'),(2,'auth','0001_initial','2016-10-28 08:43:21.709000'),(3,'admin','0001_initial','2016-10-28 08:43:22.757000'),(4,'admin','0002_logentry_remove_auto_add','2016-10-28 08:43:22.788000'),(5,'contenttypes','0002_remove_content_type_name','2016-10-28 08:43:23.680000'),(6,'auth','0002_alter_permission_name_max_length','2016-10-28 08:43:24.466000'),(7,'auth','0003_alter_user_email_max_length','2016-10-28 08:43:24.696000'),(8,'auth','0004_alter_user_username_opts','2016-10-28 08:43:24.727000'),(9,'auth','0005_alter_user_last_login_null','2016-10-28 08:43:24.930000'),(10,'auth','0006_require_contenttypes_0002','2016-10-28 08:43:24.946000'),(11,'auth','0007_alter_validators_add_error_messages','2016-10-28 08:43:24.977000'),(12,'auth','0008_alter_user_username_max_length','2016-10-28 08:43:25.853000'),(13,'sessions','0001_initial','2016-10-28 08:43:26.056000'),(14,'RideSystem_app','0001_initial','2016-10-28 08:47:36.683000'),(15,'RideSystem_app','0002_auto_20161031_1113','2016-10-31 04:13:56.181000'),(16,'RideSystem_app','0003_auto_20161031_1220','2016-10-31 05:20:43.622000'),(17,'RideSystem_app','0004_system_trip_status','2016-10-31 08:18:33.294000'),(18,'RideSystem_app','0005_auto_20161031_1613','2016-10-31 09:14:55.964000');
+insert  into `django_migrations`(`id`,`app`,`name`,`applied`) values (1,'contenttypes','0001_initial','2016-10-28 08:43:16.312000'),(2,'auth','0001_initial','2016-10-28 08:43:21.709000'),(3,'admin','0001_initial','2016-10-28 08:43:22.757000'),(4,'admin','0002_logentry_remove_auto_add','2016-10-28 08:43:22.788000'),(5,'contenttypes','0002_remove_content_type_name','2016-10-28 08:43:23.680000'),(6,'auth','0002_alter_permission_name_max_length','2016-10-28 08:43:24.466000'),(7,'auth','0003_alter_user_email_max_length','2016-10-28 08:43:24.696000'),(8,'auth','0004_alter_user_username_opts','2016-10-28 08:43:24.727000'),(9,'auth','0005_alter_user_last_login_null','2016-10-28 08:43:24.930000'),(10,'auth','0006_require_contenttypes_0002','2016-10-28 08:43:24.946000'),(11,'auth','0007_alter_validators_add_error_messages','2016-10-28 08:43:24.977000'),(12,'auth','0008_alter_user_username_max_length','2016-10-28 08:43:25.853000'),(13,'sessions','0001_initial','2016-10-28 08:43:26.056000'),(14,'RideSystem_app','0001_initial','2016-10-28 08:47:36.683000'),(15,'RideSystem_app','0002_auto_20161031_1113','2016-10-31 04:13:56.181000'),(16,'RideSystem_app','0003_auto_20161031_1220','2016-10-31 05:20:43.622000'),(17,'RideSystem_app','0004_system_trip_status','2016-10-31 08:18:33.294000'),(18,'RideSystem_app','0005_auto_20161031_1613','2016-10-31 09:14:55.964000'),(19,'RideSystem_app','0006_driver_status','2016-10-31 10:06:01.246000');
 
 /*Table structure for table `django_session` */
 
@@ -199,12 +199,13 @@ CREATE TABLE `ridesystem_app_driver` (
   `lat` varchar(20) DEFAULT NULL,
   `long` varchar(20) DEFAULT NULL,
   `name` varchar(50),
+  `status` varchar(1),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `ridesystem_app_driver` */
 
-insert  into `ridesystem_app_driver`(`id`,`username`,`password`,`lat`,`long`,`name`) values (1,'driver1','driver1','-6.914754','107.609830','Driver 1');
+insert  into `ridesystem_app_driver`(`id`,`username`,`password`,`lat`,`long`,`name`,`status`) values (1,'driver1','driver1','-6.914754','107.609830','Driver 1','A');
 
 /*Table structure for table `ridesystem_app_passenger` */
 
@@ -244,7 +245,7 @@ CREATE TABLE `ridesystem_app_system` (
 
 /*Data for the table `ridesystem_app_system` */
 
-insert  into `ridesystem_app_system`(`id`,`passenger_id`,`driver_id`,`request_id`,`lat_from`,`long_from`,`lat_to`,`long_to`,`status`,`trip_status`) values (1,1,1,'R1','-6.914744','107.609810','-6.914754','107.609830','C','C'),(2,1,1,'R2','-6.914744','107.609810','-6.121435','106.774124','C','C'),(3,1,NULL,'R3','-6.914744','107.609810','-6.100000','106.774124','P',NULL);
+insert  into `ridesystem_app_system`(`id`,`passenger_id`,`driver_id`,`request_id`,`lat_from`,`long_from`,`lat_to`,`long_to`,`status`,`trip_status`) values (1,1,1,'R1','-6.914744','107.609810','-6.914754','107.609830','C','C'),(2,1,1,'R2','-6.914744','107.609810','-6.121435','106.774124','C','C'),(3,1,1,'R3','-6.914744','107.609810','-6.100000','106.774124','C','C');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
