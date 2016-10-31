@@ -4,18 +4,19 @@ from django.db import models
 
 # Create your models here.
 class Passenger(models.Model):
-	username = models.CharField (max_length = 50, blank = True, null = True)
-	password = models.CharField (max_length = 50, blank = True, null = True)
-	name = models.CharField (max_length = 50, blank = True, null = True)
-	lat = models.CharField (max_length = 20, blank = True, null = True)
-	long = models.CharField (max_length = 20, blank = True, null = True)
+	username = models.CharField (max_length = 50, blank = True, null = True) # passenger username
+	password = models.CharField (max_length = 50, blank = True, null = True) # passenger password
+	name = models.CharField (max_length = 50, blank = True, null = True) # passenger name
+	lat = models.CharField (max_length = 20, blank = True, null = True) # passenger location
+	long = models.CharField (max_length = 20, blank = True, null = True) # passenger location
 
 class Driver(models.Model):
-	username = models.CharField (max_length = 50, blank = True, null = True)
-	password = models.CharField (max_length = 50, blank = True, null = True)
-	name = models.CharField (max_length = 50, blank = True, null = True)
-	lat = models.CharField (max_length = 20, blank = True, null = True)
-	long = models.CharField (max_length = 20, blank = True, null = True)
+	username = models.CharField (max_length = 50, blank = True, null = True) # driver username
+	password = models.CharField (max_length = 50, blank = True, null = True) # driver password
+	name = models.CharField (max_length = 50, blank = True, null = True) # driver name
+	lat = models.CharField (max_length = 20, blank = True, null = True) # driver location
+	long = models.CharField (max_length = 20, blank = True, null = True) # driver location
+	status = models.CharField (max_length = 1, blank = True, null = True) # driver status A: Active, I: Inactive
 
 class System(models.Model):
 	passenger_id = models.IntegerField (blank = True, null = True)
