@@ -12,6 +12,10 @@ from math import sin, cos, sqrt, atan2, radians
 #
 ############# CONNECTION #############
 ### Connect to the system
+### Required Parameter:
+#### username: Driver / Passenger username
+#### password: Driver/ Passenger password
+#### type: Type for Driver (0) or Passenger (1)
 class Login(APIView):
 	def post(self,request,format=None):
 		if (request.data['type'] == '1'):
@@ -42,6 +46,11 @@ class Login(APIView):
 				return Response({'info' : 'Failed','message': 'Failed to Connect, Incorrect Driver Username'})
 
 ### Send current location (presence) of either Passenger or Driver
+### Required Parameter:
+#### username: Driver / Passenger username
+#### type: Type for Driver (0) or Passenger (1)
+#### lat: Driver / Passenger latitude
+#### long: Driver / Passenger longitude
 class SendPresence(APIView):
 	def post(self, request, format=None):
 		if (request.data['type'] == '1'):
@@ -71,6 +80,11 @@ class SendPresence(APIView):
 
 ############# PAIRING #############
 ### Send ride request to the system by passenger
+### Required Parameter:
+#### username: Passenger username
+#### type: Type for Passenger (1)
+#### lat: Passenger latitude destination
+#### long: Passenger longitude destination
 class SendRequest(APIView):
 	def post(self, request, format=None):
 		if (request.data['type'] == '1'):
@@ -104,6 +118,9 @@ class SendRequest(APIView):
 			return Response({'info' : 'Failed', 'message' : "You can't make a request"})
 
 ### Receive all requests that haven't been accepted
+### Required Parameter:
+#### username: Driver username
+#### type: Type for Driver (0)
 class ReceiveRequest(APIView):
 	def post(self, request, format=None):
 		if (request.data['type'] == '0'):
@@ -123,6 +140,10 @@ class ReceiveRequest(APIView):
 				return Response ({'info' : 'Failed', 'message' : 'Driver not exist'})
 
 ### Accept request
+### Required Parameter:
+#### username: Driver username
+#### type: Type for Driver (0)
+#### request_id: Ride request unique identifier
 class AcceptRequest (APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
@@ -141,6 +162,10 @@ class AcceptRequest (APIView):
 				return Response ({'info' : 'Failed', 'message' : 'Driver not exist'})
 
 ### Passengers receive their request that have been accepted by driver
+### Required Parameter:
+#### username: Passenger username
+#### type: Type for Passenger (1)
+#### request_id: Ride request unique identifier
 class ReceiveAcceptedRequest(APIView):
 	def post (self, request, format = None):
 		if (request.data['type'] == '1'):
@@ -160,6 +185,11 @@ class ReceiveAcceptedRequest(APIView):
 
 ############# APPROACHING #############
 ### Send the driver current location
+### Required Parameter:
+#### username: Driver / Passenger username
+#### type: Type for Driver (0) or Passenger (1)
+#### lat: Driver / Passenger latitude
+#### long: Driver / Passenger longitude
 class SendDriverLocation(APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
@@ -178,6 +208,10 @@ class SendDriverLocation(APIView):
 			return Response({'info' : 'Failed', 'message' : 'Sending location failed'})
 
 ### Passenger receive the driver current location
+### Required Parameter:
+#### username: Driver / Passenger username
+#### type: Type for Driver (0) or Passenger (1)
+#### request_id: Ride request unique identifier
 class ReceiveDriverLocation(APIView):
 	def post (self, request, format = None):
 		if (request.data['type'] == '1'):
@@ -199,6 +233,10 @@ class ReceiveDriverLocation(APIView):
 
 ############# DRIVING #############
 ### Driver start the trip
+### Required Parameter:
+#### username: Driver / Passenger username
+#### type: Type for Driver (0) or Passenger (1)
+#### request_id: Ride request unique identifier
 class StartTrip(APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
@@ -219,6 +257,10 @@ class StartTrip(APIView):
 			return Response({'info' : 'Failed'})
 
 ### Driver end the trip
+### Required Parameter:
+#### username: Driver / Passenger username
+#### type: Type for Driver (0) or Passenger (1)
+#### request_id: Ride request unique identifier
 class EndTrip(APIView):
 	def post(self, request, format = None):
 		if (request.data['type'] == '0'):
